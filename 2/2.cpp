@@ -82,11 +82,12 @@ int task_two()
         {
             safe_reports++;
         }
-        else {
+        else
+        {
             for (int i = 0; i < report.size(); i++)
             {
                 vector<int> new_report = report;
-                new_report.erase( new_report.begin() + i );
+                new_report.erase(new_report.begin() + i);
                 if (is_report_safe(new_report))
                 {
                     safe_reports++;
