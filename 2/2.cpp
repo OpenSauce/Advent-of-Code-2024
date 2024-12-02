@@ -59,50 +59,6 @@ int task_one()
     return safe_reports;
 }
 
-bool is_report_safe_dampener(vector<int> report)
-{
-    set<int> seen;
-    for (int i = 0; i < report.size(); i++)
-    {
-        if (i == 0 && abs(report[i] - report[i + 1]) > 3)
-        {
-            seen.insert(i);
-        }
-
-        if (report[i] == report[i - 1] || abs(report[i] - report[i - 1]) > 3)
-        {
-            seen.insert(i);
-        }
-    }
-
-    for (int i = 1; i < report.size() - 1; i++)
-    {
-        if (report[i - 1] < report[i] && report[i] > report[i + 1])
-        {
-            seen.insert(i);
-        }
-
-        if (report[i - 1] > report[i] && report[i] < report[i + 1])
-        {
-            seen.insert(i);
-        }
-    }
-
-    if (seen.size() > 0) {
-        for (int s : report) {
-            cout << s << " ";
-        }
-        cout << " : ";
-    for (int s : seen) {
-        cout << s << " ";
-    }
-
-    cout << endl;
-    }
-
-    return seen.size() <= 1;
-}
-
 int task_two()
 {
     ifstream input("input.txt");
@@ -122,9 +78,21 @@ int task_two()
     int safe_reports = 0;
     for (vector<int> report : reports)
     {
-        if (is_report_safe_dampener(report))
+        if (is_report_safe(report))
         {
             safe_reports++;
+        }
+        else {
+            for (int i = 0; i < report.size(); i++)
+            {
+                vector<int> new_report = report;
+                new_report.erase( new_report.begin() + i );
+                if (is_report_safe(new_report))
+                {
+                    safe_reports++;
+                    break;
+                }
+            }
         }
     }
 
