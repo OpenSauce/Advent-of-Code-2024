@@ -2,10 +2,11 @@
 #include <sstream>
 #include <string>
 #include <fstream>
+#include <map>
 
 using namespace std;
 
-int main()
+int task_one()
 {
     ifstream input("input.txt");
     vector<int> v1, v2;
@@ -28,5 +29,36 @@ int main()
         distance += abs(v1[i] - v2[i]);
     }
 
-    cout << distance << endl;
+    return distance;
+}
+
+int task_two()
+{
+    ifstream input("input.txt");
+    vector<int> v1;
+    map<int, int> seen;
+    for (string line; getline(input, line);)
+    {
+        istringstream is(line);
+        int a, b;
+        is >> a >> b;
+        v1.push_back(a);
+        seen[b]++;
+    }
+
+    int similarity = 0;
+
+    for (int i = 0; i < v1.size(); i++)
+    {
+        similarity += v1[i] * seen[v1[i]];
+    }
+
+    return similarity;
+}
+
+int main()
+{
+    cout << task_one() << endl;
+    cout << task_two() << endl;
+    return 0;
 }
