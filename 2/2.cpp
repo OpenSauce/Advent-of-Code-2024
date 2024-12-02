@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <set>
 
 using namespace std;
 
@@ -60,30 +61,46 @@ int task_one()
 
 bool is_report_safe_dampener(vector<int> report)
 {
-    int problems = 0;
-    bool increasing = report[1] > report[0];
-    for (int i = 1; i < report.size(); i++)
+    set<int> seen;
+    for (int i = 0; i < report.size(); i++)
     {
+        if (i == 0 && abs(report[i] - report[i + 1]) > 3)
+        {
+            seen.insert(i);
+        }
+
         if (report[i] == report[i - 1] || abs(report[i] - report[i - 1]) > 3)
         {
-            problems++;
-            i++;
-        }
-
-        if (increasing && report[i] < report[i - 1])
-        {
-            problems++;
-            i++;
-        }
-
-        if (!increasing && report[i] > report[i - 1])
-        {
-            problems++;
-            i++;
+            seen.insert(i);
         }
     }
 
-    return problems > 1;
+    for (int i = 1; i < report.size() - 1; i++)
+    {
+        if (report[i - 1] < report[i] && report[i] > report[i + 1])
+        {
+            seen.insert(i);
+        }
+
+        if (report[i - 1] > report[i] && report[i] < report[i + 1])
+        {
+            seen.insert(i);
+        }
+    }
+
+    if (seen.size() > 0) {
+        for (int s : report) {
+            cout << s << " ";
+        }
+        cout << " : ";
+    for (int s : seen) {
+        cout << s << " ";
+    }
+
+    cout << endl;
+    }
+
+    return seen.size() <= 1;
 }
 
 int task_two()
