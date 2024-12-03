@@ -61,7 +61,6 @@ int task_one()
 int main()
 {
     cout << task_one() << endl;
-    cout << "----------------" << endl;
     cout << task_two() << endl;
     return 0;
 }
