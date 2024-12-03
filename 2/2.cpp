@@ -34,7 +34,7 @@ bool is_report_safe(vector<int> report)
 int task_one()
 {
     ifstream input("input.txt");
-    vector<vector<int> > reports;
+    vector<vector<int>> reports;
     for (string line; getline(input, line);)
     {
         istringstream is(line);
@@ -62,7 +62,7 @@ int task_one()
 int task_two()
 {
     ifstream input("input.txt");
-    vector<vector<int> > reports;
+    vector<vector<int>> reports;
     for (string line; getline(input, line);)
     {
         istringstream is(line);

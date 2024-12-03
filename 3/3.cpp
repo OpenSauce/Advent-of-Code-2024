@@ -8,37 +8,30 @@ using namespace std;
 int task_two()
 {
     ifstream input("input.txt");
-    regex r{R"~(mul\((\d+),(\d+)\))~"};
+    regex r{R"~((mul\((\d+),(\d+)\))|(do\(\))|(don't\(\)))~"};
     int res = 0;
     for (string line; getline(input, line);)
     {
-        string result = "";
-        size_t start = 0;
-        while (true) {
-            size_t nextDont = line.find("don't()", start);
-            if (nextDont == string::npos) {
-                result += line.substr(start);
-                break;
-            }
-            size_t nextDo = line.find("do()", nextDont + 7);
-            if (nextDo == string::npos) {
-                result += line.substr(start, nextDont - start);
-                break;
-            }
-            result += line.substr(start, nextDont - start);
-            result += "||||||";
-            start = nextDo;
-        }
-
-        cout << result << endl;
-        cout << "----------------" << endl;
-
-        // Handle the "cleansed line"
         smatch m;
-        string::const_iterator searchStart(result.cbegin());
-        while (regex_search(searchStart, result.cend(), m, r))
+        string::const_iterator searchStart(line.cbegin());
+        bool enabled = true;
+        while (regex_search(searchStart, line.cend(), m, r))
         {
-            res += (stoi(m[1]) * stoi(m[2]));
+            if (m[0] == "do()")
+            {
+                enabled = true;
+            }
+            else if (m[0] == "don't()")
+            {
+                enabled = false;
+            }
+            else
+            {
+                if (enabled)
+                {
+                    res += (stoi(m[2]) * stoi(m[3]));
+                }
+            }
             searchStart = m.suffix().first;
         }
     }
