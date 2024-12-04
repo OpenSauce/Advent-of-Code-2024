@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int find_xmas(const vector<vector<char>> &matrix, int i, int j)
+int find_xmas(vector<vector<char>> matrix, int i, int j)
 {
     int count = 0;
     // Up
@@ -82,7 +82,7 @@ int task_one()
     return res;
 }
 
-int find_x_mas(const vector<vector<char>> &matrix, int i, int j)
+int find_x_mas(vector<vector<char>> matrix, int i, int j)
 {
     // Check boundaries
     if (i < 1 || i >= matrix.size() - 1 || j < 1 || j >= matrix[i].size() - 1)
