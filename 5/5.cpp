@@ -54,9 +54,6 @@ int task_one()
                             break;
                         }
                     }
-                    temp.push_back(curr_page);
-                    temp_set.insert(curr_page);
-                    continue;
                 }
 
                 temp.push_back(curr_page);
